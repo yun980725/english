@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英文字彙字根記憶法</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Lora:wght@600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --purple-50: #EEEDFE; --purple-200: #AFA9EC; --purple-400: #7F77DD;
+  --purple-600: #534AB7; --purple-800: #3C3489; --purple-900: #26215C;
+  --teal-50: #E1F5EE; --teal-200: #5DCAA5; --teal-600: #0F6E56; --teal-800: #085041;
+  --coral-50: #FAECE7; --coral-200: #F0997B; --coral-600: #993C1D; --coral-800: #711B0C;
+  --amber-50: #FAEEDA; --amber-200: #EF9F27; --amber-600: #854F0B;
+  --green-50: #EAF3DE; --green-200: #97C459; --green-600: #3B6D11;
+  --red-50: #FCEBEB; --red-200: #F09595; --red-600: #A32D2D;
+  --gray-50: #F1EFE8; --gray-100: #D3D1C7; --gray-200: #B4B2A9;
+  --gray-400: #888780; --gray-600: #5F5E5A; --gray-800: #444441; --gray-900: #2C2C2A;
+  --bg: #FAFAF8; --surface: #FFFFFF; --text: #1a1a18; --text-muted: #5F5E5A;
+  --border: rgba(0,0,0,0.1); --border-strong: rgba(0,0,0,0.2);
+  --radius: 10px; --radius-lg: 16px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+a { color: inherit; text-decoration: none; }
+
+/* NAV */
+.nav { background: var(--surface); border-bottom: 0.5px solid var(--border-strong); padding: 0 2rem; display: flex; align-items: center; gap: 0; position: sticky; top: 0; z-index: 50; }
+.nav-logo { font-family: 'Lora', serif; font-size: 18px; color: var(--purple-800); margin-right: 2rem; padding: 1rem 0; white-space: nowrap; }
+.nav-tabs { display: flex; gap: 0; flex: 1; }
+.nav-tab { padding: 1rem 1.1rem; font-size: 14px; font-weight: 500; color: var(--text-muted); border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.nav-tab:hover { color: var(--text); }
+.nav-tab.active { color: var(--purple-800); border-bottom-color: var(--purple-400); }
+.nav-admin { margin-left: auto; padding: 6px 14px; font-size: 12px; font-weight: 500; background: var(--gray-50); border: 0.5px solid var(--border-strong); border-radius: 20px; cursor: pointer; color: var(--text-muted); }
+.nav-admin:hover { background: var(--purple-50); color: var(--purple-800); }
+
+/* MAIN */
+.main { max-width: 780px; margin: 0 auto; padding: 2rem 1.25rem; }
+.page { display: none; }
+.page.active { display: block; }
+
+/* HERO */
+.hero { text-align: center; padding: 2.5rem 1rem 2rem; background: var(--surface); border-radius: var(--radius-lg); border: 0.5px solid var(--border); margin-bottom: 1.75rem; }
+.hero-badge { display: inline-block; background: var(--purple-50); color: var(--purple-900); font-size: 11px; font-weight: 700; padding: 4px 14px; border-radius: 20px; border: 1px solid var(--purple-200); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; }
+.hero h1 { font-family: 'Lora', serif; font-size: 28px; color: var(--purple-900); margin-bottom: 0.5rem; }
+.hero p { font-size: 14px; color: var(--text-muted); }
+
+/* ROOT NAV */
+.root-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.rnav-btn { padding: 7px 16px; border: 0.5px solid var(--border-strong); background: var(--surface); border-radius: 20px; font-size: 13px; font-weight: 500; cursor: pointer; color: var(--text-muted); transition: all 0.15s; }
+.rnav-btn.active { background: var(--purple-50); border-color: var(--purple-200); color: var(--purple-800); }
+.rnav-btn:hover:not(.active) { background: var(--gray-50); }
+
+/* ROOT CARD */
+.root-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1rem; }
+.root-header { display: flex; align-items: center; gap: 14px; margin-bottom: 1.25rem; }
+.root-chip { background: var(--purple-50); color: var(--purple-800); font-family: 'Lora', serif; font-size: 22px; font-weight: 600; padding: 10px 18px; border-radius: var(--radius); border: 1.5px solid var(--purple-200); min-width: 80px; text-align: center; }
+.root-meta strong { font-size: 16px; font-weight: 700; color: var(--text); display: block; margin-bottom: 2px; }
+.root-meta span { font-size: 12px; color: var(--text-muted); }
+.words-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+.word-pill { background: var(--gray-50); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 12px 14px; cursor: pointer; transition: all 0.15s; }
+.word-pill:hover { border-color: var(--purple-200); background: var(--purple-50); transform: translateY(-1px); }
+.word-pill .wrd { font-size: 15px; font-weight: 600; color: var(--text); }
+.word-pill .wph { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.empty-root { text-align: center; padding: 2rem; color: var(--text-muted); font-size: 14px; }
+
+/* POPUP */
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 200; align-items: center; justify-content: center; padding: 1rem; }
+.overlay.show { display: flex; }
+.popup { background: var(--surface); border-radius: var(--radius-lg); padding: 1.75rem; max-width: 400px; width: 100%; border: 0.5px solid var(--border-strong); animation: popIn 0.18s ease; }
+@keyframes popIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.popup-word { font-family: 'Lora', serif; font-size: 26px; font-weight: 600; color: var(--text); }
+.popup-ph { font-size: 13px; color: var(--text-muted); margin: 4px 0 14px; }
+.popup-parts { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+.part { font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 20px; }
+.part.prefix { background: var(--teal-50); color: var(--teal-800); border: 1px solid var(--teal-200); }
+.part.root { background: var(--purple-50); color: var(--purple-900); border: 1px solid var(--purple-200); }
+.part.suffix { background: var(--coral-50); color: var(--coral-800); border: 1px solid var(--coral-200); }
+.popup-def { font-size: 15px; font-weight: 500; color: var(--text); line-height: 1.6; margin-bottom: 10px; }
+.popup-ex { font-size: 13px; color: var(--text-muted); line-height: 1.65; border-left: 2.5px solid var(--purple-200); padding-left: 12px; margin-bottom: 1.25rem; font-style: italic; }
+.popup-close { width: 100%; padding: 10px; background: var(--gray-50); border: 0.5px solid var(--border-strong); border-radius: var(--radius); cursor: pointer; font-size: 14px; color: var(--text-muted); font-family: 'Noto Sans TC', sans-serif; }
+.popup-close:hover { background: var(--gray-100); }
+
+/* QUIZ */
+.quiz-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; }
+.quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+.quiz-title { font-size: 15px; font-weight: 700; }
+.quiz-score-box { display: flex; align-items: baseline; gap: 4px; }
+.score-val { font-size: 22px; font-weight: 700; color: var(--purple-800); }
+.score-lbl { font-size: 12px; color: var(--text-muted); }
+.quiz-word { font-family: 'Lora', serif; font-size: 28px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+.quiz-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 1.5rem; }
+.opts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1rem; }
+.opt { padding: 14px 12px; border: 0.5px solid var(--border-strong); background: var(--gray-50); border-radius: var(--radius); cursor: pointer; font-size: 14px; font-weight: 500; color: var(--text); text-align: left; font-family: 'Noto Sans TC', sans-serif; transition: all 0.12s; line-height: 1.4; }
+.opt:hover:not(:disabled) { border-color: var(--purple-200); background: var(--purple-50); }
+.opt.correct { background: var(--green-50) !important; border-color: var(--green-200) !important; color: var(--green-600) !important; }
+.opt.wrong { background: var(--red-50) !important; border-color: var(--red-200) !important; color: var(--red-600) !important; }
+.quiz-fb { min-height: 52px; font-size: 13px; color: var(--text-muted); line-height: 1.7; padding: 8px 0; }
+.quiz-next { margin-top: 8px; padding: 10px 24px; background: var(--purple-50); border: 1px solid var(--purple-200); border-radius: var(--radius); cursor: pointer; font-size: 14px; font-weight: 700; color: var(--purple-800); font-family: 'Noto Sans TC', sans-serif; display: none; }
+.quiz-next:hover { background: var(--purple-200); }
+.quiz-empty { text-align: center; padding: 3rem; color: var(--text-muted); font-size: 14px; }
+
+/* CHALLENGE */
+.ch-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; }
+.ch-num { font-size: 12px; color: var(--text-muted); margin-bottom: 0.5rem; font-weight: 500; }
+.ch-q { font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; line-height: 1.5; }
+.ch-hint { font-size: 13px; color: var(--text-muted); margin-bottom: 1.25rem; padding: 10px 14px; background: var(--amber-50); border-radius: var(--radius); border-left: 3px solid var(--amber-200); }
+.ch-row { display: flex; gap: 10px; margin-bottom: 1rem; }
+.ch-input { flex: 1; padding: 12px 14px; border: 0.5px solid var(--border-strong); border-radius: var(--radius); font-size: 15px; font-family: 'Noto Sans TC', sans-serif; color: var(--text); background: var(--bg); }
+.ch-input:focus { outline: none; border-color: var(--purple-400); background: var(--purple-50); }
+.ch-btn { padding: 12px 20px; background: var(--purple-600); border: none; border-radius: var(--radius); cursor: pointer; font-size: 14px; font-weight: 700; color: #fff; font-family: 'Noto Sans TC', sans-serif; }
+.ch-btn:hover { background: var(--purple-800); }
+.ch-fb { font-size: 14px; padding: 10px 14px; border-radius: var(--radius); margin-bottom: 0.75rem; display: none; font-weight: 500; }
+.ch-fb.ok { background: var(--green-50); color: var(--green-600); display: block; border: 0.5px solid var(--green-200); }
+.ch-fb.err { background: var(--red-50); color: var(--red-600); display: block; border: 0.5px solid var(--red-200); }
+.ch-next { width: 100%; padding: 10px; background: var(--gray-50); border: 0.5px solid var(--border-strong); border-radius: var(--radius); cursor: pointer; font-size: 14px; color: var(--text-muted); font-family: 'Noto Sans TC', sans-serif; }
+.ch-next:hover { background: var(--gray-100); }
+
+/* ADMIN */
+.admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+@media (max-width: 600px) { .admin-grid { grid-template-columns: 1fr; } }
+.admin-panel { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; }
+.admin-panel h2 { font-size: 16px; font-weight: 700; margin-bottom: 1.25rem; color: var(--text); display: flex; align-items: center; gap: 8px; }
+.admin-panel h2 span { font-size: 20px; }
+.field-label { font-size: 12px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 6px; display: block; }
+.field { margin-bottom: 1rem; }
+input[type=text], textarea, select {
+  width: 100%; padding: 10px 12px; border: 0.5px solid var(--border-strong); border-radius: var(--radius);
+  font-size: 14px; font-family: 'Noto Sans TC', sans-serif; color: var(--text); background: var(--bg);
+}
+input[type=text]:focus, textarea:focus, select:focus { outline: none; border-color: var(--purple-400); background: var(--purple-50); }
+textarea { resize: vertical; min-height: 80px; }
+.btn-primary { width: 100%; padding: 11px; background: var(--purple-600); border: none; border-radius: var(--radius); cursor: pointer; font-size: 14px; font-weight: 700; color: #fff; font-family: 'Noto Sans TC', sans-serif; margin-top: 4px; }
+.btn-primary:hover { background: var(--purple-800); }
+.btn-danger { padding: 5px 12px; background: var(--red-50); border: 0.5px solid var(--red-200); border-radius: var(--radius); cursor: pointer; font-size: 12px; font-weight: 600; color: var(--red-600); font-family: 'Noto Sans TC', sans-serif; }
+.btn-danger:hover { background: var(--red-200); }
+.list-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border: 0.5px solid var(--border); border-radius: var(--radius); margin-bottom: 6px; background: var(--gray-50); }
+.list-item-name { font-size: 14px; font-weight: 600; color: var(--text); }
+.list-item-sub { font-size: 12px; color: var(--text-muted); }
+.list-scroll { max-height: 320px; overflow-y: auto; }
+.admin-full { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; margin-top: 1.25rem; }
+.parts-builder { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 1rem; }
+.part-input { display: flex; flex-direction: column; gap: 4px; }
+.part-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+.tag-prefix { color: var(--teal-800); }
+.tag-root { color: var(--purple-800); }
+.tag-suffix { color: var(--coral-800); }
+.toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--gray-900); color: #fff; padding: 12px 20px; border-radius: var(--radius); font-size: 14px; font-weight: 500; z-index: 999; transform: translateY(80px); opacity: 0; transition: all 0.25s; pointer-events: none; }
+.toast.show { transform: translateY(0); opacity: 1; }
+.progress-row { display: flex; gap: 1rem; margin-bottom: 1.75rem; }
+.stat-box { flex: 1; background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 14px 16px; text-align: center; }
+.stat-num { font-size: 24px; font-weight: 700; color: var(--purple-800); display: block; }
+.stat-lbl { font-size: 12px; color: var(--text-muted); }
+.admin-sep { border: none; border-top: 0.5px solid var(--border); margin: 1rem 0; }
+.no-items { text-align: center; padding: 2rem; color: var(--text-muted); font-size: 13px; }
+.word-list-item { padding: 8px 12px; border: 0.5px solid var(--border); border-radius: var(--radius); margin-bottom: 6px; background: var(--gray-50); display: flex; justify-content: space-between; align-items: center; }
+.word-list-item .winfo { flex: 1; }
+.word-list-item .wname { font-size: 14px; font-weight: 600; }
+.word-list-item .wdef { font-size: 12px; color: var(--text-muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 260px; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">字根字彙</div>
+  <div class="nav-tabs">
+    <div class="nav-tab active" onclick="goPage('learn')">📖 學習字根</div>
+    <div class="nav-tab" onclick="goPage('quiz')">🧠 小測驗</div>
+    <div class="nav-tab" onclick="goPage('challenge')">✏️ 填字挑戰</div>
+  </div>
+  <button class="nav-admin" onclick="goPage('admin')">⚙ 管理</button>
+</nav>
+
+<div class="main">
+
+<!-- LEARN -->
+<div id="page-learn" class="page active">
+  <div class="hero">
+    <div class="hero-badge">高中英文字彙</div>
+    <h1>字根字尾記憶法</h1>
+    <p>拆解單字結構，一個字根學會一串單字</p>
+  </div>
+  <div class="root-nav" id="root-nav"></div>
+  <div id="root-display"></div>
+</div>
+
+<!-- QUIZ -->
+<div id="page-quiz" class="page">
+  <div class="quiz-card" id="quiz-box">
+    <div class="quiz-empty">請先在「管理」頁面新增至少 4 個單字，才能進行測驗。</div>
+  </div>
+</div>
+
+<!-- CHALLENGE -->
+<div id="page-challenge" class="page">
+  <div class="ch-card" id="ch-box">
+    <div class="quiz-empty">請先在「管理」頁面新增單字，才能進行填字挑戰。</div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div id="page-admin" class="page">
+  <div class="progress-row">
+    <div class="stat-box"><span class="stat-num" id="stat-roots">0</span><span class="stat-lbl">字根數</span></div>
+    <div class="stat-box"><span class="stat-num" id="stat-words">0</span><span class="stat-lbl">單字數</span></div>
+    <div class="stat-box"><span class="stat-num" id="stat-ch">0</span><span class="stat-lbl">填字題數</span></div>
+    <div class="stat-box" style="flex:0;min-width:100px;cursor:pointer;background:var(--red-50);border-color:var(--red-200);" onclick="resetAll()"><span class="stat-num" style="font-size:18px;color:var(--red-600)">↺</span><span class="stat-lbl" style="color:var(--red-600)">重置資料</span></div>
+  </div>
+
+  <div class="admin-grid">
+    <!-- Add Root -->
+    <div class="admin-panel">
+      <h2><span>🌱</span> 新增字根</h2>
+      <div class="field">
+        <label class="field-label">字根（如 ex-）</label>
+        <input type="text" id="r-root" placeholder="ex-">
+      </div>
+      <div class="field">
+        <label class="field-label">中文意思</label>
+        <input type="text" id="r-meaning" placeholder="向外、超越">
+      </div>
+      <div class="field">
+        <label class="field-label">語源（可選）</label>
+        <input type="text" id="r-origin" placeholder="拉丁文">
+      </div>
+      <button class="btn-primary" onclick="addRoot()">新增字根</button>
+    </div>
+
+    <!-- Root List -->
+    <div class="admin-panel">
+      <h2><span>📋</span> 現有字根</h2>
+      <div class="list-scroll" id="root-list"></div>
+    </div>
+  </div>
+
+  <!-- Add Word -->
+  <div class="admin-full">
+    <h2 style="font-size:16px;font-weight:700;margin-bottom:1.25rem;color:var(--text);display:flex;align-items:center;gap:8px;"><span>📝</span> 新增單字</h2>
+    <div class="admin-grid">
+      <div>
+        <div class="field">
+          <label class="field-label">選擇字根</label>
+          <select id="w-root"></select>
+        </div>
+        <div class="field">
+          <label class="field-label">英文單字</label>
+          <input type="text" id="w-word" placeholder="export">
+        </div>
+        <div class="field">
+          <label class="field-label">音標</label>
+          <input type="text" id="w-ph" placeholder="/ɪkˈspɔːrt/">
+        </div>
+        <div class="field">
+          <label class="field-label">中文解釋</label>
+          <input type="text" id="w-def" placeholder="出口；輸出商品到其他國家">
+        </div>
+        <div class="field">
+          <label class="field-label">例句（中英各一）</label>
+          <textarea id="w-ex" placeholder="Taiwan exports many semiconductors. 台灣出口許多半導體。"></textarea>
+        </div>
+      </div>
+      <div>
+        <label class="field-label">字根拆解（字首／字根／字尾）</label>
+        <div style="margin-bottom:0.75rem;font-size:12px;color:var(--text-muted)">每個方塊填一個部分，不用的留空</div>
+        <div class="parts-builder" id="parts-builder">
+          <div class="part-input"><span class="part-tag tag-prefix">字首 prefix</span><input type="text" id="p0" placeholder="ex-（向外）"></div>
+          <div class="part-input"><span class="part-tag tag-root">字根 root</span><input type="text" id="p1" placeholder="port（搬運）"></div>
+          <div class="part-input"><span class="part-tag tag-suffix">字尾 suffix</span><input type="text" id="p2" placeholder="-tion（名詞）"></div>
+          <div class="part-input"><span class="part-tag tag-prefix">字首 prefix</span><input type="text" id="p3" placeholder=""></div>
+          <div class="part-input"><span class="part-tag tag-root">字根 root</span><input type="text" id="p4" placeholder=""></div>
+          <div class="part-input"><span class="part-tag tag-suffix">字尾 suffix</span><input type="text" id="p5" placeholder=""></div>
+        </div>
+        <div style="margin-top:1rem">
+          <label class="field-label">預覽</label>
+          <div id="parts-preview" style="display:flex;gap:6px;flex-wrap:wrap;min-height:34px;padding:8px;border:0.5px solid var(--border);border-radius:var(--radius);background:var(--bg)"></div>
+        </div>
+        <button class="btn-primary" style="margin-top:1rem" onclick="addWord()">新增單字</button>
+      </div>
+    </div>
+
+    <hr class="admin-sep">
+    <h3 style="font-size:14px;font-weight:700;margin-bottom:0.75rem;">已新增的單字</h3>
+    <div class="list-scroll" id="word-list"></div>
+  </div>
+
+  <!-- Add Challenge -->
+  <div class="admin-full" style="margin-top:1.25rem">
+    <h2 style="font-size:16px;font-weight:700;margin-bottom:1.25rem;color:var(--text);display:flex;align-items:center;gap:8px;"><span>✏️</span> 新增填字題</h2>
+    <div class="admin-grid">
+      <div>
+        <div class="field">
+          <label class="field-label">題目描述</label>
+          <textarea id="ch-q" placeholder="字根 'ex-' 代表「向外」，那麼 ex___t 表示「輸出」，完整單字是？"></textarea>
+        </div>
+        <div class="field">
+          <label class="field-label">提示</label>
+          <input type="text" id="ch-hint-in" placeholder="ex + port（搬運）">
+        </div>
+        <div class="field">
+          <label class="field-label">答案（學生需輸入的文字）</label>
+          <input type="text" id="ch-ans" placeholder="export">
+        </div>
+        <div class="field">
+          <label class="field-label">顯示答案（答對後顯示）</label>
+          <input type="text" id="ch-full" placeholder="export">
+        </div>
+        <button class="btn-primary" onclick="addChallenge()">新增題目</button>
+      </div>
+      <div>
+        <label class="field-label">現有填字題</label>
+        <div class="list-scroll" id="ch-list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<!-- POPUP -->
+<div class="overlay" id="popup" onclick="if(event.target===this)closePopup()">
+  <div class="popup">
+    <div class="popup-word" id="pw"></div>
+    <div class="popup-ph" id="pph"></div>
+    <div class="popup-parts" id="pbd"></div>
+    <div class="popup-def" id="pdef"></div>
+    <div class="popup-ex" id="pex"></div>
+    <button class="popup-close" onclick="closePopup()">關閉</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── DEFAULT DATA ────────────────────────────────────────────────────────────
+const DEFAULT_ROOTS = [
+  { id:'ex',   root:'ex-',        meaning:'向外、超越',         origin:'拉丁文' },
+  { id:'re',   root:'re-',        meaning:'再次、返回',         origin:'拉丁文' },
+  { id:'pre',  root:'pre-',       meaning:'在前、預先',         origin:'拉丁文' },
+  { id:'mis',  root:'mis-',       meaning:'錯誤、不好',         origin:'古英文' },
+  { id:'un',   root:'un-',        meaning:'否定、相反',         origin:'古英文' },
+  { id:'sub',  root:'sub-',       meaning:'在下、次要',         origin:'拉丁文' },
+  { id:'inter',root:'inter-',     meaning:'之間、相互',         origin:'拉丁文' },
+  { id:'over', root:'over-',      meaning:'過度、在上',         origin:'古英文' },
+  { id:'trans',root:'trans-',     meaning:'穿越、轉換',         origin:'拉丁文' },
+  { id:'port', root:'port（搬運）',meaning:'搬運、攜帶',         origin:'拉丁文字根' },
+  { id:'dict', root:'dict（說）',  meaning:'說、宣告',           origin:'拉丁文字根' },
+  { id:'spec', root:'spec（看）',  meaning:'看、觀察',           origin:'拉丁文字根' },
+  { id:'rupt', root:'rupt（破裂）',meaning:'打破、中斷',         origin:'拉丁文字根' },
+  { id:'tion', root:'-tion/-sion',meaning:'名詞化（行為/結果）', origin:'拉丁文字尾' },
+  { id:'ful',  root:'-ful/-less', meaning:'充滿…／缺乏…',       origin:'古英文字尾' },
+  { id:'able', root:'-able/-ible',meaning:'能夠…的（形容詞）',   origin:'拉丁文字尾' },
+];
+
+const PT = [['prefix','prefix','suffix','prefix','root','suffix']];
+
+const DEFAULT_WORDS = [
+  // ── ex- ──────────────────────────────────────────────────────────────────
+  {id:'w1',  rootId:'ex', word:'export',     ph:'/ɪkˈspɔːrt/',   parts:[{t:'prefix',l:'ex-（向外）'},{t:'root',l:'port（搬運）'}],                    def:'出口；輸出商品到其他國家',         ex:'Taiwan exports many semiconductors to the world. 台灣向世界輸出許多半導體。'},
+  {id:'w2',  rootId:'ex', word:'exclude',    ph:'/ɪkˈskluːd/',   parts:[{t:'prefix',l:'ex-（向外）'},{t:'root',l:'clud（關閉）'}],                    def:'排除；不包括在內',                 ex:'The price excludes tax. 此價格不含稅。'},
+  {id:'w3',  rootId:'ex', word:'expand',     ph:'/ɪkˈspænd/',    parts:[{t:'prefix',l:'ex-（向外）'},{t:'root',l:'pand（伸展）'}],                    def:'擴張；使變大',                     ex:'The company plans to expand overseas. 公司計劃向海外擴展。'},
+  {id:'w4',  rootId:'ex', word:'express',    ph:'/ɪkˈspres/',    parts:[{t:'prefix',l:'ex-（向外）'},{t:'root',l:'press（壓出）'}],                   def:'表達；表現感情或想法',             ex:'She expressed her joy through music. 她透過音樂表達喜悅。'},
+  {id:'w5',  rootId:'ex', word:'expose',     ph:'/ɪkˈspoʊz/',    parts:[{t:'prefix',l:'ex-（向外）'},{t:'root',l:'pose（放置）'}],                    def:'暴露；揭露真相',                   ex:'The report exposed corruption. 報告揭露了腐敗行為。'},
+  {id:'w6',  rootId:'ex', word:'external',   ph:'/ɪkˈstɜːrnl/',  parts:[{t:'prefix',l:'ex-（外部）'},{t:'root',l:'tern（邊界）'},{t:'suffix',l:'-al（形容詞）'}], def:'外部的；來自外面的',     ex:'External pressure caused the team to fail. 外部壓力導致團隊失敗。'},
+  {id:'w7',  rootId:'ex', word:'examine',    ph:'/ɪɡˈzæmɪn/',    parts:[{t:'prefix',l:'ex-（徹底）'},{t:'root',l:'amin（測試）'}],                    def:'檢查；仔細審視',                   ex:'The doctor examined the patient carefully. 醫生仔細檢查了病人。'},
+  {id:'w8',  rootId:'ex', word:'exceed',     ph:'/ɪkˈsiːd/',     parts:[{t:'prefix',l:'ex-（超越）'},{t:'root',l:'ceed（走）'}],                      def:'超過；超出限度',                   ex:'Don\'t exceed the speed limit. 不要超速行駛。'},
+  {id:'w9',  rootId:'ex', word:'exhaust',    ph:'/ɪɡˈzɔːst/',    parts:[{t:'prefix',l:'ex-（向外）'},{t:'root',l:'haust（汲取）'}],                   def:'使精疲力竭；耗盡',                 ex:'The long run exhausted him. 長跑讓他精疲力竭。'},
+  {id:'w10', rootId:'ex', word:'extinct',    ph:'/ɪkˈstɪŋkt/',   parts:[{t:'prefix',l:'ex-（向外）'},{t:'root',l:'stinct（刺滅）'}],                  def:'滅絕的；已消失的',                 ex:'Dinosaurs have been extinct for millions of years. 恐龍已滅絕數百萬年。'},
+  // ── re- ──────────────────────────────────────────────────────────────────
+  {id:'w11', rootId:'re', word:'review',     ph:'/rɪˈvjuː/',     parts:[{t:'prefix',l:'re-（再次）'},{t:'root',l:'view（看）'}],                      def:'複習；重新審視',                   ex:'Let\'s review the notes before the exam. 考試前讓我們複習筆記。'},
+  {id:'w12', rootId:'re', word:'rebuild',    ph:'/ˌriːˈbɪld/',   parts:[{t:'prefix',l:'re-（再次）'},{t:'root',l:'build（建造）'}],                   def:'重建；重新構建',                   ex:'The city was rebuilt after the earthquake. 地震後城市被重建。'},
+  {id:'w13', rootId:'re', word:'recall',     ph:'/rɪˈkɔːl/',     parts:[{t:'prefix',l:'re-（返回）'},{t:'root',l:'call（呼喚）'}],                    def:'回想；記憶',                       ex:'I can\'t recall her name. 我想不起她的名字。'},
+  {id:'w14', rootId:'re', word:'reduce',     ph:'/rɪˈdjuːs/',    parts:[{t:'prefix',l:'re-（向後）'},{t:'root',l:'duc（引導）'}],                     def:'減少；降低',                       ex:'We should reduce plastic waste. 我們應該減少塑膠廢棄物。'},
+  {id:'w15', rootId:'re', word:'reflect',    ph:'/rɪˈflekt/',    parts:[{t:'prefix',l:'re-（返回）'},{t:'root',l:'flect（彎折）'}],                   def:'反射；反思',                       ex:'The lake reflects the mountains. 湖面倒映著山脈。'},
+  {id:'w16', rootId:'re', word:'reform',     ph:'/rɪˈfɔːrm/',    parts:[{t:'prefix',l:'re-（再次）'},{t:'root',l:'form（形成）'}],                    def:'改革；改善制度或做法',             ex:'The government plans to reform the education system. 政府計劃改革教育制度。'},
+  {id:'w17', rootId:'re', word:'reject',     ph:'/rɪˈdʒekt/',    parts:[{t:'prefix',l:'re-（向後）'},{t:'root',l:'ject（投擲）'}],                    def:'拒絕；排斥',                       ex:'He rejected the job offer. 他拒絕了工作邀約。'},
+  {id:'w18', rootId:'re', word:'release',    ph:'/rɪˈliːs/',     parts:[{t:'prefix',l:'re-（再次）'},{t:'root',l:'lease（放開）'}],                   def:'釋放；發布',                       ex:'The prisoner was released after ten years. 囚犯在十年後獲釋。'},
+  {id:'w19', rootId:'re', word:'respond',    ph:'/rɪˈspɒnd/',    parts:[{t:'prefix',l:'re-（回應）'},{t:'root',l:'spond（承諾）'}],                   def:'回應；作出反應',                   ex:'Please respond to the email by Friday. 請在星期五前回覆電子郵件。'},
+  {id:'w20', rootId:'re', word:'restore',    ph:'/rɪˈstɔːr/',    parts:[{t:'prefix',l:'re-（再次）'},{t:'root',l:'store（儲存）'}],                   def:'恢復；修復原狀',                   ex:'The painting was carefully restored. 這幅畫被仔細修復了。'},
+  // ── pre- ─────────────────────────────────────────────────────────────────
+  {id:'w21', rootId:'pre', word:'predict',   ph:'/prɪˈdɪkt/',    parts:[{t:'prefix',l:'pre-（提前）'},{t:'root',l:'dict（說）'}],                     def:'預測；預言未來的事',               ex:'Scientists can predict earthquakes. 科學家能夠預測地震。'},
+  {id:'w22', rootId:'pre', word:'prevent',   ph:'/prɪˈvent/',    parts:[{t:'prefix',l:'pre-（提前）'},{t:'root',l:'vent（來）'}],                     def:'預防；阻止發生',                   ex:'Wash hands to prevent disease. 洗手以預防疾病。'},
+  {id:'w23', rootId:'pre', word:'prepare',   ph:'/prɪˈpeər/',    parts:[{t:'prefix',l:'pre-（提前）'},{t:'root',l:'pare（準備）'}],                   def:'準備；預先做好安排',               ex:'Prepare well for the exam. 好好準備考試。'},
+  {id:'w24', rootId:'pre', word:'prefix',    ph:'/ˈpriːfɪks/',   parts:[{t:'prefix',l:'pre-（前面）'},{t:'root',l:'fix（固定）'}],                    def:'字首；加在字前的詞素',             ex:'"Un-" is a common prefix. "Un-" 是常見的字首。'},
+  {id:'w25', rootId:'pre', word:'preserve',  ph:'/prɪˈzɜːrv/',   parts:[{t:'prefix',l:'pre-（提前）'},{t:'root',l:'serve（守護）'}],                  def:'保存；保護不受破壞',               ex:'We must preserve the rainforest. 我們必須保護雨林。'},
+  {id:'w26', rootId:'pre', word:'previous',  ph:'/ˈpriːviəs/',   parts:[{t:'prefix',l:'pre-（之前）'},{t:'root',l:'vi（路）'},{t:'suffix',l:'-ous（形容詞）'}],  def:'先前的；之前的',         ex:'In the previous lesson, we learned about verbs. 在上一堂課，我們學了動詞。'},
+  {id:'w27', rootId:'pre', word:'preview',   ph:'/ˈpriːvjuː/',   parts:[{t:'prefix',l:'pre-（提前）'},{t:'root',l:'view（看）'}],                     def:'預覽；事先觀看',                   ex:'Watch a preview before buying the movie. 購買電影前先看預覽。'},
+  {id:'w28', rootId:'pre', word:'precise',   ph:'/prɪˈsaɪs/',    parts:[{t:'prefix',l:'pre-（提前切好）'},{t:'root',l:'cis（切）'}],                  def:'精確的；準確無誤的',               ex:'Give a precise answer. 給出精確的答案。'},
+  // ── mis- ─────────────────────────────────────────────────────────────────
+  {id:'w29', rootId:'mis', word:'mistake',       ph:'/mɪˈsteɪk/',    parts:[{t:'prefix',l:'mis-（錯誤）'},{t:'root',l:'take（拿取）'}],                def:'錯誤；弄錯了的事',                 ex:'Everyone makes mistakes. 每個人都會犯錯。'},
+  {id:'w30', rootId:'mis', word:'mislead',       ph:'/ˌmɪsˈliːd/',   parts:[{t:'prefix',l:'mis-（錯誤）'},{t:'root',l:'lead（引導）'}],               def:'誤導；帶往錯誤方向',               ex:'The ad was designed to mislead consumers. 廣告是為了誤導消費者而設計的。'},
+  {id:'w31', rootId:'mis', word:'misunderstand', ph:'/ˌmɪsʌndəˈstænd/', parts:[{t:'prefix',l:'mis-（錯誤）'},{t:'root',l:'understand（理解）'}],      def:'誤解；理解錯誤',                   ex:'Don\'t misunderstand my words. 不要誤解我的話。'},
+  {id:'w32', rootId:'mis', word:'misuse',        ph:'/ˌmɪsˈjuːz/',   parts:[{t:'prefix',l:'mis-（不當）'},{t:'root',l:'use（使用）'}],                def:'濫用；使用不當',                   ex:'Misuse of drugs is dangerous. 濫用藥物是危險的。'},
+  {id:'w33', rootId:'mis', word:'misbehave',     ph:'/ˌmɪsbɪˈheɪv/', parts:[{t:'prefix',l:'mis-（不好）'},{t:'root',l:'behave（行為）'}],             def:'行為不端；表現不好',               ex:'The children misbehaved in class. 孩子們在課堂上行為不端。'},
+  {id:'w34', rootId:'mis', word:'misplace',      ph:'/ˌmɪsˈpleɪs/',  parts:[{t:'prefix',l:'mis-（錯誤）'},{t:'root',l:'place（放置）'}],              def:'放錯地方；弄丟',                   ex:'I misplaced my keys again. 我又把鑰匙放錯地方了。'},
+  {id:'w35', rootId:'mis', word:'misjudge',      ph:'/ˌmɪsˈdʒʌdʒ/',  parts:[{t:'prefix',l:'mis-（錯誤）'},{t:'root',l:'judge（判斷）'}],             def:'判斷錯誤；低估',                   ex:'She misjudged the distance. 她判斷錯了距離。'},
+  // ── un- ──────────────────────────────────────────────────────────────────
+  {id:'w36', rootId:'un', word:'unhappy',     ph:'/ʌnˈhæpi/',     parts:[{t:'prefix',l:'un-（否定）'},{t:'root',l:'happy（快樂）'}],                  def:'不快樂的；悲傷的',                 ex:'She felt unhappy about the result. 她對結果感到不快樂。'},
+  {id:'w37', rootId:'un', word:'unfair',      ph:'/ˌʌnˈfeər/',    parts:[{t:'prefix',l:'un-（否定）'},{t:'root',l:'fair（公平）'}],                   def:'不公平的；偏頗的',                 ex:'It\'s unfair to blame only one person. 只責怪一個人是不公平的。'},
+  {id:'w38', rootId:'un', word:'unknown',     ph:'/ˌʌnˈnoʊn/',    parts:[{t:'prefix',l:'un-（否定）'},{t:'root',l:'known（已知）'}],                  def:'未知的；不知名的',                 ex:'The cause of the disease is still unknown. 這種疾病的原因仍然未知。'},
+  {id:'w39', rootId:'un', word:'unable',      ph:'/ʌnˈeɪbl/',     parts:[{t:'prefix',l:'un-（否定）'},{t:'root',l:'able（能夠）'}],                   def:'無法的；不能的',                   ex:'He was unable to attend the meeting. 他無法參加會議。'},
+  {id:'w40', rootId:'un', word:'uncomfortable',ph:'/ʌnˈkʌmftəbl/',parts:[{t:'prefix',l:'un-（否定）'},{t:'root',l:'comfort（舒適）'},{t:'suffix',l:'-able（能…的）'}], def:'不舒適的；令人不安的', ex:'The chair is uncomfortable. 這把椅子不舒適。'},
+  {id:'w41', rootId:'un', word:'unexpected',  ph:'/ˌʌnɪkˈspektɪd/',parts:[{t:'prefix',l:'un-（否定）'},{t:'root',l:'expect（預期）'},{t:'suffix',l:'-ed（形容詞）'}], def:'意外的；出乎意料的', ex:'The snow was unexpected in April. 四月下雪真是出乎意料。'},
+  {id:'w42', rootId:'un', word:'uncertain',   ph:'/ʌnˈsɜːrtn/',   parts:[{t:'prefix',l:'un-（否定）'},{t:'root',l:'certain（確定）'}],                def:'不確定的；猶豫的',                 ex:'I am uncertain about the answer. 我對答案不確定。'},
+  {id:'w43', rootId:'un', word:'unusual',     ph:'/ʌnˈjuːʒuəl/',  parts:[{t:'prefix',l:'un-（否定）'},{t:'root',l:'usual（通常）'}],                  def:'不尋常的；罕見的',                 ex:'It is unusual to see snow here. 在這裡看到雪很不尋常。'},
+  {id:'w44', rootId:'un', word:'unbelievable',ph:'/ˌʌnbɪˈliːvəbl/',parts:[{t:'prefix',l:'un-（否定）'},{t:'root',l:'believe（相信）'},{t:'suffix',l:'-able（能…的）'}],def:'難以置信的；驚人的', ex:'His speed is unbelievable. 他的速度令人難以置信。'},
+  // ── sub- ─────────────────────────────────────────────────────────────────
+  {id:'w45', rootId:'sub', word:'subway',     ph:'/ˈsʌbweɪ/',     parts:[{t:'prefix',l:'sub-（在下）'},{t:'root',l:'way（路）'}],                     def:'地鐵；地下通道',                   ex:'Take the subway to the city center. 搭地鐵去市中心。'},
+  {id:'w46', rootId:'sub', word:'submarine',  ph:'/ˈsʌbməriːn/',  parts:[{t:'prefix',l:'sub-（在下）'},{t:'root',l:'marine（海洋）'}],                def:'潛水艇；海底的',                   ex:'The submarine dove deep into the ocean. 潛水艇深入海底。'},
+  {id:'w47', rootId:'sub', word:'subtract',   ph:'/səbˈtrækt/',   parts:[{t:'prefix',l:'sub-（向下）'},{t:'root',l:'tract（拉）'}],                   def:'減去；扣除',                       ex:'Subtract 5 from 10 to get 5. 10減去5得5。'},
+  {id:'w48', rootId:'sub', word:'subject',    ph:'/ˈsʌbdʒɪkt/',   parts:[{t:'prefix',l:'sub-（在下）'},{t:'root',l:'ject（投擲）'}],                  def:'科目；主題；受到…支配',            ex:'My favorite subject is English. 我最喜歡的科目是英文。'},
+  {id:'w49', rootId:'sub', word:'substitute', ph:'/ˈsʌbstɪtjuːt/',parts:[{t:'prefix',l:'sub-（代替）'},{t:'root',l:'stit（站立）'}],                  def:'替代品；代替',                     ex:'Sugar can be a substitute for honey. 糖可以替代蜂蜜。'},
+  {id:'w50', rootId:'sub', word:'submit',     ph:'/səbˈmɪt/',     parts:[{t:'prefix',l:'sub-（在下）'},{t:'root',l:'mit（送出）'}],                   def:'提交；呈遞',                       ex:'Submit your homework by Monday. 週一前提交作業。'},
+  {id:'w51', rootId:'sub', word:'support',    ph:'/səˈpɔːrt/',    parts:[{t:'prefix',l:'sub-（從下）'},{t:'root',l:'port（搬運）'}],                  def:'支持；支撐',                       ex:'Parents support their children. 父母支持他們的孩子。'},
+  // ── inter- ───────────────────────────────────────────────────────────────
+  {id:'w52', rootId:'inter', word:'international', ph:'/ˌɪntəˈnæʃnəl/',parts:[{t:'prefix',l:'inter-（之間）'},{t:'root',l:'nation（國家）'},{t:'suffix',l:'-al（形容詞）'}],def:'國際的；跨國的', ex:'The Olympic Games is an international event. 奧運是國際賽事。'},
+  {id:'w53', rootId:'inter', word:'internet',      ph:'/ˈɪntərnet/',   parts:[{t:'prefix',l:'inter-（之間）'},{t:'root',l:'net（網路）'}],             def:'網際網路；全球資訊網',             ex:'I found the answer on the internet. 我在網路上找到了答案。'},
+  {id:'w54', rootId:'inter', word:'interact',      ph:'/ˌɪntərˈækt/',  parts:[{t:'prefix',l:'inter-（相互）'},{t:'root',l:'act（行動）'}],             def:'互動；相互作用',                   ex:'Students should interact with each other. 學生應該相互互動。'},
+  {id:'w55', rootId:'inter', word:'interview',     ph:'/ˈɪntərvjuː/',  parts:[{t:'prefix',l:'inter-（相互）'},{t:'root',l:'view（看）'}],              def:'訪談；面試',                       ex:'She passed the job interview. 她通過了工作面試。'},
+  {id:'w56', rootId:'inter', word:'interpret',     ph:'/ɪnˈtɜːrprɪt/', parts:[{t:'prefix',l:'inter-（之間）'},{t:'root',l:'pret（解釋）'}],            def:'解釋；口譯',                       ex:'Can you interpret this poem? 你能解釋這首詩嗎？'},
+  {id:'w57', rootId:'inter', word:'interrupt',     ph:'/ˌɪntəˈrʌpt/',  parts:[{t:'prefix',l:'inter-（之間）'},{t:'root',l:'rupt（破裂）'}],            def:'打斷；中斷',                       ex:'Don\'t interrupt when others are speaking. 不要在別人說話時打斷。'},
+  // ── over- ────────────────────────────────────────────────────────────────
+  {id:'w58', rootId:'over', word:'overcome',   ph:'/ˌoʊvərˈkʌm/',  parts:[{t:'prefix',l:'over-（超越）'},{t:'root',l:'come（來）'}],                 def:'克服；戰勝困難',                   ex:'She overcame her fear of heights. 她克服了對高度的恐懼。'},
+  {id:'w59', rootId:'over', word:'overwork',   ph:'/ˌoʊvərˈwɜːrk/', parts:[{t:'prefix',l:'over-（過度）'},{t:'root',l:'work（工作）'}],               def:'過度工作；使筋疲力盡',             ex:'Don\'t overwork yourself. 不要讓自己過度勞累。'},
+  {id:'w60', rootId:'over', word:'overlook',   ph:'/ˌoʊvərˈlʊk/',  parts:[{t:'prefix',l:'over-（在上）'},{t:'root',l:'look（看）'}],                 def:'忽視；俯瞰',                       ex:'Don\'t overlook the small details. 不要忽視小細節。'},
+  {id:'w61', rootId:'over', word:'overweight', ph:'/ˌoʊvərˈweɪt/',  parts:[{t:'prefix',l:'over-（超過）'},{t:'root',l:'weight（重量）'}],             def:'超重的；過胖的',                   ex:'The suitcase is overweight. 行李箱超重了。'},
+  {id:'w62', rootId:'over', word:'overseas',   ph:'/ˌoʊvərˈsiːz/',  parts:[{t:'prefix',l:'over-（越過）'},{t:'root',l:'seas（海洋）'}],               def:'海外的；在國外',                   ex:'She went overseas to study. 她出國留學了。'},
+  {id:'w63', rootId:'over', word:'overnight',  ph:'/ˌoʊvərˈnaɪt/',  parts:[{t:'prefix',l:'over-（跨越）'},{t:'root',l:'night（夜晚）'}],              def:'一夜之間；整夜的',                 ex:'The problem won\'t be solved overnight. 問題不會一夜之間解決。'},
+  {id:'w64', rootId:'over', word:'overall',    ph:'/ˌoʊvərˈɔːl/',   parts:[{t:'prefix',l:'over-（全面）'},{t:'root',l:'all（全部）'}],                def:'整體的；總體的',                   ex:'The overall score was excellent. 整體成績非常優秀。'},
+  // ── trans- ───────────────────────────────────────────────────────────────
+  {id:'w65', rootId:'trans', word:'transport',  ph:'/ˈtrænspɔːrt/',  parts:[{t:'prefix',l:'trans-（穿越）'},{t:'root',l:'port（搬運）'}],              def:'運輸；搬運',                       ex:'Public transport is very efficient here. 這裡的大眾運輸非常有效率。'},
+  {id:'w66', rootId:'trans', word:'translate',  ph:'/trænsˈleɪt/',   parts:[{t:'prefix',l:'trans-（轉換）'},{t:'root',l:'late（帶）'}],                def:'翻譯；轉化',                       ex:'Can you translate this sentence into Chinese? 你能把這句話翻譯成中文嗎？'},
+  {id:'w67', rootId:'trans', word:'transform',  ph:'/trænsˈfɔːrm/',  parts:[{t:'prefix',l:'trans-（轉換）'},{t:'root',l:'form（形狀）'}],              def:'改變；使轉化',                     ex:'Exercise can transform your body. 運動能改變你的身體。'},
+  {id:'w68', rootId:'trans', word:'transfer',   ph:'/trænsˈfɜːr/',   parts:[{t:'prefix',l:'trans-（穿越）'},{t:'root',l:'fer（攜帶）'}],               def:'轉移；調換',                       ex:'Transfer the file to your computer. 將檔案轉移到你的電腦。'},
+  {id:'w69', rootId:'trans', word:'transparent',ph:'/trænsˈpærənt/', parts:[{t:'prefix',l:'trans-（穿透）'},{t:'root',l:'par（出現）'},{t:'suffix',l:'-ent（形容詞）'}], def:'透明的；坦誠的', ex:'The glass is completely transparent. 玻璃是完全透明的。'},
+  {id:'w70', rootId:'trans', word:'transaction',ph:'/trænsˈækʃn/',   parts:[{t:'prefix',l:'trans-（穿越）'},{t:'root',l:'act（行動）'},{t:'suffix',l:'-ion（名詞）'}],  def:'交易；業務往來', ex:'The bank recorded every transaction. 銀行記錄了每一筆交易。'},
+  // ── port (字根) ───────────────────────────────────────────────────────────
+  {id:'w71', rootId:'port', word:'import',    ph:'/ˈɪmpɔːrt/',    parts:[{t:'prefix',l:'im-（向內）'},{t:'root',l:'port（搬運）'}],                   def:'進口；輸入',                       ex:'We import oil from the Middle East. 我們從中東進口石油。'},
+  {id:'w72', rootId:'port', word:'report',    ph:'/rɪˈpɔːrt/',    parts:[{t:'prefix',l:'re-（返回）'},{t:'root',l:'port（攜帶）'}],                   def:'報告；匯報',                       ex:'Please report the results. 請匯報結果。'},
+  {id:'w73', rootId:'port', word:'portable',  ph:'/ˈpɔːrtəbl/',   parts:[{t:'root',l:'port（搬運）'},{t:'suffix',l:'-able（能…的）'}],                def:'攜帶式的；可攜帶的',               ex:'I bought a portable speaker. 我買了一個攜帶式喇叭。'},
+  {id:'w74', rootId:'port', word:'portfolio', ph:'/pɔːrtˈfoʊlioʊ/',parts:[{t:'root',l:'port（攜帶）'},{t:'root',l:'folio（葉片）'}],                  def:'作品集；投資組合',                 ex:'Show your portfolio at the interview. 面試時展示你的作品集。'},
+  {id:'w75', rootId:'port', word:'important', ph:'/ɪmˈpɔːrtnt/',  parts:[{t:'prefix',l:'im-（帶入）'},{t:'root',l:'port（帶）'},{t:'suffix',l:'-ant（形容詞）'}],       def:'重要的；重大的', ex:'Health is the most important thing. 健康是最重要的事。'},
+  // ── dict (字根) ───────────────────────────────────────────────────────────
+  {id:'w76', rootId:'dict', word:'dictionary',ph:'/ˈdɪkʃəneri/',  parts:[{t:'root',l:'dict（說）'},{t:'suffix',l:'-ionary（…的書）'}],               def:'字典；辭典',                       ex:'Look it up in the dictionary. 在字典裡查一查。'},
+  {id:'w77', rootId:'dict', word:'dictate',   ph:'/ˈdɪkteɪt/',    parts:[{t:'root',l:'dict（說）'},{t:'suffix',l:'-ate（動詞）'}],                   def:'口述；命令；支配',                 ex:'The teacher dictated sentences to the class. 老師向全班口述句子。'},
+  {id:'w78', rootId:'dict', word:'contradict',ph:'/ˌkɒntrəˈdɪkt/',parts:[{t:'prefix',l:'contra-（反對）'},{t:'root',l:'dict（說）'}],                def:'反駁；矛盾',                       ex:'His actions contradict his words. 他的行為與言語相矛盾。'},
+  {id:'w79', rootId:'dict', word:'verdict',   ph:'/ˈvɜːrdɪkt/',   parts:[{t:'root',l:'ver（真實）'},{t:'root',l:'dict（說）'}],                      def:'裁決；判決',                       ex:'The jury reached a verdict. 陪審團作出了裁決。'},
+  {id:'w80', rootId:'dict', word:'indicate',  ph:'/ˈɪndɪkeɪt/',   parts:[{t:'prefix',l:'in-（向內）'},{t:'root',l:'dic（說明）'},{t:'suffix',l:'-ate（動詞）'}],        def:'指示；表明', ex:'The sign indicates the exit. 標誌指示出口方向。'},
+  // ── spec (字根) ───────────────────────────────────────────────────────────
+  {id:'w81', rootId:'spec', word:'inspect',   ph:'/ɪnˈspekt/',    parts:[{t:'prefix',l:'in-（向內）'},{t:'root',l:'spec（看）'}],                     def:'檢查；視察',                       ex:'The officer inspected the building. 官員視察了大樓。'},
+  {id:'w82', rootId:'spec', word:'respect',   ph:'/rɪˈspekt/',    parts:[{t:'prefix',l:'re-（再次）'},{t:'root',l:'spec（看）'}],                     def:'尊重；敬意',                       ex:'Respect your elders. 尊重長輩。'},
+  {id:'w83', rootId:'spec', word:'expect',    ph:'/ɪkˈspekt/',    parts:[{t:'prefix',l:'ex-（向外）'},{t:'root',l:'spec（看）'}],                     def:'期待；預期',                       ex:'I expect good results. 我期待好成績。'},
+  {id:'w84', rootId:'spec', word:'special',   ph:'/ˈspeʃl/',      parts:[{t:'root',l:'spec（看）'},{t:'suffix',l:'-ial（形容詞）'}],                  def:'特別的；專門的',                   ex:'Today is a special day. 今天是特別的一天。'},
+  {id:'w85', rootId:'spec', word:'spectator', ph:'/spekˈteɪtər/', parts:[{t:'root',l:'spec（看）'},{t:'suffix',l:'-ator（做…的人）'}],                def:'觀眾；旁觀者',                     ex:'The spectators cheered loudly. 觀眾大聲歡呼。'},
+  {id:'w86', rootId:'spec', word:'spectacular',ph:'/spekˈtækjələr/',parts:[{t:'root',l:'spec（看）'},{t:'suffix',l:'-tacular（壯觀的）'}],             def:'壯觀的；令人印象深刻的',           ex:'The fireworks were spectacular. 煙火非常壯觀。'},
+  // ── rupt (字根) ───────────────────────────────────────────────────────────
+  {id:'w87', rootId:'rupt', word:'interrupt',  ph:'/ˌɪntəˈrʌpt/',  parts:[{t:'prefix',l:'inter-（之間）'},{t:'root',l:'rupt（破裂）'}],              def:'打斷；中斷',                       ex:'Please don\'t interrupt the speaker. 請不要打斷演講者。'},
+  {id:'w88', rootId:'rupt', word:'disrupt',    ph:'/dɪsˈrʌpt/',    parts:[{t:'prefix',l:'dis-（分開）'},{t:'root',l:'rupt（破裂）'}],                def:'擾亂；使中斷',                     ex:'The storm disrupted the flight schedule. 暴風雨打亂了飛行時間表。'},
+  {id:'w89', rootId:'rupt', word:'erupt',      ph:'/ɪˈrʌpt/',      parts:[{t:'prefix',l:'e-（向外）'},{t:'root',l:'rupt（破裂）'}],                  def:'爆發；噴發',                       ex:'The volcano erupted violently. 火山猛烈爆發。'},
+  {id:'w90', rootId:'rupt', word:'corrupt',    ph:'/kəˈrʌpt/',     parts:[{t:'prefix',l:'cor-（完全）'},{t:'root',l:'rupt（破裂）'}],                def:'腐敗的；使腐化',                   ex:'The corrupt official was arrested. 腐敗的官員被逮捕了。'},
+  {id:'w91', rootId:'rupt', word:'bankrupt',   ph:'/ˈbæŋkrʌpt/',   parts:[{t:'root',l:'bank（銀行）'},{t:'root',l:'rupt（破裂）'}],                  def:'破產的；宣告破產',                 ex:'The company went bankrupt. 公司宣告破產。'},
+  // ── -tion/-sion ───────────────────────────────────────────────────────────
+  {id:'w92', rootId:'tion', word:'education',   ph:'/ˌedʒuˈkeɪʃn/', parts:[{t:'root',l:'educat（教導）'},{t:'suffix',l:'-ion（名詞）'}],             def:'教育；知識的傳授過程',             ex:'Education is the key to success. 教育是成功的關鍵。'},
+  {id:'w93', rootId:'tion', word:'pollution',   ph:'/pəˈluːʃn/',    parts:[{t:'root',l:'pollut（污染）'},{t:'suffix',l:'-ion（名詞）'}],              def:'污染；環境受到破壞',               ex:'Air pollution is a serious problem. 空氣污染是嚴重問題。'},
+  {id:'w94', rootId:'tion', word:'expression',  ph:'/ɪkˈspreʃn/',   parts:[{t:'root',l:'express（表達）'},{t:'suffix',l:'-ion（名詞）'}],             def:'表達；表情；表現方式',             ex:'Her expression showed surprise. 她的表情顯示出驚訝。'},
+  {id:'w95', rootId:'tion', word:'decision',    ph:'/dɪˈsɪʒn/',     parts:[{t:'root',l:'decid（決定）'},{t:'suffix',l:'-sion（名詞）'}],              def:'決定；選擇的結果',                 ex:'It was a difficult decision. 這是個艱難的決定。'},
+  {id:'w96', rootId:'tion', word:'attention',   ph:'/əˈtenʃn/',     parts:[{t:'root',l:'attent（集中）'},{t:'suffix',l:'-ion（名詞）'}],              def:'注意力；關注',                     ex:'Pay attention in class. 上課要專心。'},
+  {id:'w97', rootId:'tion', word:'imagination', ph:'/ɪˌmædʒɪˈneɪʃn/',parts:[{t:'root',l:'imagin（想像）'},{t:'suffix',l:'-ation（名詞）'}],           def:'想像力；想像',                     ex:'Children have great imagination. 孩子有豐富的想像力。'},
+  {id:'w98', rootId:'tion', word:'solution',    ph:'/səˈluːʃn/',    parts:[{t:'root',l:'solut（解開）'},{t:'suffix',l:'-ion（名詞）'}],               def:'解決方法；答案',                   ex:'We need a solution to this problem. 我們需要解決這個問題的方法。'},
+  // ── -ful/-less ───────────────────────────────────────────────────────────
+  {id:'w99',  rootId:'ful', word:'beautiful',  ph:'/ˈbjuːtɪfl/',  parts:[{t:'root',l:'beauti（美麗）'},{t:'suffix',l:'-ful（充滿…的）'}],            def:'美麗的；漂亮的',                   ex:'What a beautiful sunset! 多麼美麗的日落！'},
+  {id:'w100', rootId:'ful', word:'powerful',   ph:'/ˈpaʊərfl/',   parts:[{t:'root',l:'power（力量）'},{t:'suffix',l:'-ful（充滿…的）'}],             def:'有力的；強大的',                   ex:'She gave a powerful speech. 她發表了一篇有力的演講。'},
+  {id:'w101', rootId:'ful', word:'hopeless',   ph:'/ˈhoʊpləs/',   parts:[{t:'root',l:'hope（希望）'},{t:'suffix',l:'-less（缺乏…的）'}],             def:'絕望的；沒有希望的',               ex:'The situation seemed hopeless. 情況看起來很絕望。'},
+  {id:'w102', rootId:'ful', word:'careless',   ph:'/ˈkeərləs/',   parts:[{t:'root',l:'care（注意）'},{t:'suffix',l:'-less（缺乏…的）'}],             def:'粗心的；不小心的',                 ex:'A careless mistake cost him the game. 粗心的失誤使他輸掉了比賽。'},
+  {id:'w103', rootId:'ful', word:'useful',     ph:'/ˈjuːsfl/',    parts:[{t:'root',l:'use（用途）'},{t:'suffix',l:'-ful（充滿…的）'}],               def:'有用的；實用的',                   ex:'This tool is very useful. 這個工具非常有用。'},
+  {id:'w104', rootId:'ful', word:'harmful',    ph:'/ˈhɑːrmfl/',   parts:[{t:'root',l:'harm（傷害）'},{t:'suffix',l:'-ful（充滿…的）'}],              def:'有害的；造成傷害的',               ex:'Smoking is harmful to your health. 吸煙有害健康。'},
+  {id:'w105', rootId:'ful', word:'fearless',   ph:'/ˈfɪərləs/',   parts:[{t:'root',l:'fear（恐懼）'},{t:'suffix',l:'-less（缺乏…的）'}],             def:'無畏的；勇敢的',                   ex:'The fearless firefighter entered the burning building. 無畏的消防員進入燃燒的建築物。'},
+  // ── -able/-ible ───────────────────────────────────────────────────────────
+  {id:'w106', rootId:'able', word:'readable',    ph:'/ˈriːdəbl/',    parts:[{t:'root',l:'read（閱讀）'},{t:'suffix',l:'-able（能…的）'}],              def:'可讀的；易讀的',                   ex:'His handwriting is barely readable. 他的筆跡幾乎難以辨認。'},
+  {id:'w107', rootId:'able', word:'comfortable', ph:'/ˈkʌmftəbl/',   parts:[{t:'root',l:'comfort（舒適）'},{t:'suffix',l:'-able（能…的）'}],           def:'舒適的；輕鬆的',                   ex:'This sofa is very comfortable. 這張沙發非常舒適。'},
+  {id:'w108', rootId:'able', word:'reliable',    ph:'/rɪˈlaɪəbl/',   parts:[{t:'root',l:'rely（依賴）'},{t:'suffix',l:'-able（能…的）'}],              def:'可靠的；值得信賴的',               ex:'She is a reliable friend. 她是個可靠的朋友。'},
+  {id:'w109', rootId:'able', word:'flexible',    ph:'/ˈfleksɪbl/',   parts:[{t:'root',l:'flex（彎曲）'},{t:'suffix',l:'-ible（能…的）'}],              def:'靈活的；可彎曲的',                 ex:'A flexible schedule helps work-life balance. 靈活的時間表有助工作與生活平衡。'},
+  {id:'w110', rootId:'able', word:'responsible', ph:'/rɪˈspɒnsɪbl/', parts:[{t:'root',l:'respons（回應）'},{t:'suffix',l:'-ible（能…的）'}],           def:'負責任的；有責任感的',             ex:'Be responsible for your actions. 對自己的行為負責。'},
+  {id:'w111', rootId:'able', word:'remarkable',  ph:'/rɪˈmɑːrkəbl/', parts:[{t:'root',l:'remark（評論）'},{t:'suffix',l:'-able（能…的）'}],            def:'顯著的；非凡的',                   ex:'She made a remarkable discovery. 她有了一個顯著的發現。'},
+  {id:'w112', rootId:'able', word:'visible',     ph:'/ˈvɪzɪbl/',     parts:[{t:'root',l:'vis（看）'},{t:'suffix',l:'-ible（能…的）'}],                def:'看得見的；明顯的',                 ex:'The mountain was visible from the city. 從城市可以看到那座山。'},
+  {id:'w113', rootId:'able', word:'possible',    ph:'/ˈpɒsɪbl/',     parts:[{t:'root',l:'poss（能夠）'},{t:'suffix',l:'-ible（能…的）'}],             def:'可能的；也許能的',                 ex:'Anything is possible if you try. 只要努力，一切皆有可能。'},
+];
+
+const DEFAULT_CHALLENGES = [
+  {id:'c1',  prompt:"字根 'ex-' 代表「向外」，那麼 'ex___t' 表示「輸出」，完整單字是？",       hint:'ex + port（搬運）',      answer:'export',        full:'export'},
+  {id:'c2',  prompt:"'re-' 代表「再次」，'_____ew' 是「複習」的意思，完整單字是？",            hint:'re + view（看）',        answer:'review',        full:'review'},
+  {id:'c3',  prompt:"字根 'pre-' 代表「預先」，________t 意思是「預防」，完整單字是？",        hint:'pre + vent（來）',       answer:'prevent',       full:'prevent'},
+  {id:'c4',  prompt:"'mis-' 代表「錯誤」，_______ke 意思是「錯誤」，完整單字是？",             hint:'mis + take（拿取）',     answer:'mistake',       full:'mistake'},
+  {id:'c5',  prompt:"'un-' 代表否定，unhappy 的中文意思是？",                                  hint:'happy = 快樂，加上否定字首', answer:'不快樂',      full:'不快樂'},
+  {id:'c6',  prompt:"'sub-' 代表「在下方」，地鐵在地下行駛，英文是 s___way，完整單字是？",     hint:'sub + way（路）',        answer:'subway',        full:'subway'},
+  {id:'c7',  prompt:"'inter-' 代表「之間、相互」，'_______national' 意思是「國際的」，完整單字是？", hint:'inter + national（國家）', answer:'international', full:'international'},
+  {id:'c8',  prompt:"'over-' 代表「超越、過度」，____come 意思是「克服」，完整單字是？",        hint:'over + come（來）',      answer:'overcome',      full:'overcome'},
+  {id:'c9',  prompt:"'trans-' 代表「穿越、轉換」，________port 意思是「運輸」，完整單字是？",   hint:'trans + port（搬運）',   answer:'transport',     full:'transport'},
+  {id:'c10', prompt:"字根 'port' 代表「搬運」，im_____ 意思是「進口」，完整單字是？",           hint:'im（向內）+ port（搬運）', answer:'import',       full:'import'},
+  {id:'c11', prompt:"字根 'dict' 代表「說」，con_______t 意思是「反駁」，完整單字是？",         hint:'contra（反）+ dict（說）', answer:'contradict',   full:'contradict'},
+  {id:'c12', prompt:"字根 'spec' 代表「看」，_____tator 指觀看比賽的人，完整單字是？",          hint:'spec（看）+ -tator（做…的人）', answer:'spectator', full:'spectator'},
+  {id:'c13', prompt:"字根 'rupt' 代表「破裂」，火山 e____s 噴發，動詞完整形是？",               hint:'e（向外）+ rupt（破裂）', answer:'erupts',       full:'erupt'},
+  {id:'c14', prompt:"'-ful' 代表「充滿」，harm 是「傷害」，harm_____ 意思是「有害的」？",        hint:'harm + -ful（充滿…的）', answer:'harmful',       full:'harmful'},
+  {id:'c15', prompt:"'-less' 代表「缺乏」，care 是「注意」，care____ 意思是「粗心的」？",        hint:'care + -less（缺乏…的）', answer:'careless',     full:'careless'},
+  {id:'c16', prompt:"'-able' 代表「能夠」，rely 是「依賴」，reli_____ 意思是「可靠的」？",       hint:'rely → reli + -able',    answer:'reliable',      full:'reliable'},
+  {id:'c17', prompt:"'over-' + 'seas' 組合表示在海洋另一頭，即「海外的」，英文是？",             hint:'over + seas',             answer:'overseas',      full:'overseas'},
+  {id:'c18', prompt:"字根 'spec'（看）＋ '-tacular' 組成形容詞，意思是「壯觀的」，英文是？",    hint:'spec + -tacular',         answer:'spectacular',   full:'spectacular'},
+  {id:'c19', prompt:"'re-' 代表「返回」，store 是「儲存」，re_____ 意思是「恢復原狀」？",        hint:'re + store',              answer:'restore',       full:'restore'},
+  {id:'c20', prompt:"'trans-' 代表「穿透」，trans_______ent 意思是「透明的」，完整單字是？",     hint:'trans + par（出現）+ -ent', answer:'transparent',  full:'transparent'},
+];
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+function load() {
+  const r = localStorage.getItem('vr_roots');
+  const w = localStorage.getItem('vr_words');
+  const c = localStorage.getItem('vr_ch');
+  return {
+    roots: r ? JSON.parse(r) : JSON.parse(JSON.stringify(DEFAULT_ROOTS)),
+    words: w ? JSON.parse(w) : JSON.parse(JSON.stringify(DEFAULT_WORDS)),
+    challenges: c ? JSON.parse(c) : JSON.parse(JSON.stringify(DEFAULT_CHALLENGES)),
+  };
+}
+function save() {
+  localStorage.setItem('vr_roots', JSON.stringify(STATE.roots));
+  localStorage.setItem('vr_words', JSON.stringify(STATE.words));
+  localStorage.setItem('vr_ch', JSON.stringify(STATE.challenges));
+}
+let STATE = load();
+let curRoot = 0, qIdx = 0, qScore = 0, qAnswered = false, chIdx = 0;
+
+// ── NAV ──────────────────────────────────────────────────────────────────────
+function goPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  const idx = ['learn','quiz','challenge'].indexOf(id);
+  if(idx >= 0) document.querySelectorAll('.nav-tab')[idx].classList.add('active');
+  if(id==='learn') renderLearn();
+  if(id==='quiz') renderQuiz();
+  if(id==='challenge') renderChallenge();
+  if(id==='admin') renderAdmin();
+}
+
+// ── LEARN ────────────────────────────────────────────────────────────────────
+function renderLearn() {
+  const nav = document.getElementById('root-nav');
+  nav.innerHTML = STATE.roots.map((r,i) => `<button class="rnav-btn${i===curRoot?' active':''}" onclick="showRoot(${i})">${r.root}</button>`).join('');
+  showRoot(curRoot);
+}
+function showRoot(i) {
+  curRoot = i;
+  document.querySelectorAll('.rnav-btn').forEach((b,j) => b.classList.toggle('active', j===i));
+  const r = STATE.roots[i];
+  const words = STATE.words.filter(w => w.rootId === r.id);
+  document.getElementById('root-display').innerHTML = `
+    <div class="root-card">
+      <div class="root-header">
+        <div class="root-chip">${r.root}</div>
+        <div class="root-meta"><strong>${r.meaning}</strong><span>語源：${r.origin||'—'}</span></div>
+      </div>
+      ${words.length === 0
+        ? '<div class="empty-root">此字根尚無單字，請至「管理」頁面新增。</div>'
+        : `<div class="words-grid">${words.map((w,wi) => `
+          <div class="word-pill" onclick="showPopup('${w.id}')">
+            <div class="wrd">${w.word}</div>
+            <div class="wph">${w.ph||''}</div>
+          </div>`).join('')}</div>`
+      }
+    </div>
+    <p style="font-size:12px;color:var(--text-muted);text-align:center;margin-top:8px">點擊單字卡查看詳細解析</p>
+  `;
+}
+function showPopup(wid) {
+  const w = STATE.words.find(x => x.id === wid);
+  if(!w) return;
+  document.getElementById('pw').textContent = w.word;
+  document.getElementById('pph').textContent = w.ph||'';
+  document.getElementById('pbd').innerHTML = (w.parts||[]).map(p => `<span class="part ${p.t}">${p.l}</span>`).join('');
+  document.getElementById('pdef').textContent = w.def;
+  document.getElementById('pex').textContent = w.ex||'';
+  document.getElementById('popup').classList.add('show');
+}
+function closePopup() { document.getElementById('popup').classList.remove('show'); }
+
+// ── QUIZ ─────────────────────────────────────────────────────────────────────
+function renderQuiz() {
+  const box = document.getElementById('quiz-box');
+  if(STATE.words.length < 4) {
+    box.innerHTML = '<div class="quiz-empty">請先在「管理」頁面新增至少 4 個單字，才能進行測驗。</div>';
+    return;
+  }
+  const w = STATE.words[qIdx % STATE.words.length];
+  const r = STATE.roots.find(x => x.id === w.rootId);
+  const correct = w.def;
+  const wrongs = STATE.words.filter(x => x.def !== correct).sort(() => Math.random()-0.5).slice(0,3).map(x=>x.def);
+  const opts = [correct, ...wrongs].sort(() => Math.random()-0.5);
+  box.innerHTML = `
+    <div class="quiz-header">
+      <div class="quiz-title">猜猜這個單字的意思</div>
+      <div class="quiz-score-box"><span class="score-val" id="qscore">${qScore}</span><span class="score-lbl">分</span></div>
+    </div>
+    <div class="quiz-word">${w.word}</div>
+    <div class="quiz-sub">${w.ph||''} ${r ? `・字根：${r.root}（${r.meaning}）` : ''}</div>
+    <div class="opts" id="q-opts">
+      ${opts.map((o,i) => `<button class="opt" id="opt${i}" onclick="answerQuiz(${i},'${encodeURIComponent(o)}','${encodeURIComponent(correct)}')">${o}</button>`).join('')}
+    </div>
+    <div class="quiz-fb" id="q-fb"></div>
+    <button class="quiz-next" id="q-next" onclick="nextQ()">下一題 →</button>
+  `;
+  qAnswered = false;
+}
+function answerQuiz(idx, chosenEnc, correctEnc) {
+  if(qAnswered) return;
+  qAnswered = true;
+  const chosen = decodeURIComponent(chosenEnc);
+  const correct = decodeURIComponent(correctEnc);
+  const btns = document.querySelectorAll('.opt');
+  btns.forEach(b => b.disabled = true);
+  const w = STATE.words[qIdx % STATE.words.length];
+  if(chosen === correct) {
+    btns[idx].classList.add('correct');
+    qScore++;
+    document.getElementById('qscore').textContent = qScore;
+    document.getElementById('q-fb').innerHTML = `<span style="color:var(--green-600);font-weight:700">✓ 正確！</span> ${w.ex||''}`;
+  } else {
+    btns[idx].classList.add('wrong');
+    btns.forEach(b => { if(b.textContent === correct) b.classList.add('correct'); });
+    document.getElementById('q-fb').innerHTML = `<span style="color:var(--red-600);font-weight:700">✗ 再想想！</span> 正確答案：${correct}`;
+  }
+  document.getElementById('q-next').style.display = 'block';
+}
+function nextQ() { qIdx++; renderQuiz(); }
+
+// ── CHALLENGE ────────────────────────────────────────────────────────────────
+function renderChallenge() {
+  const box = document.getElementById('ch-box');
+  if(STATE.challenges.length === 0) {
+    box.innerHTML = '<div class="quiz-empty">請先在「管理」頁面新增填字題。</div>';
+    return;
+  }
+  const ch = STATE.challenges[chIdx % STATE.challenges.length];
+  box.innerHTML = `
+    <div class="ch-num">第 ${(chIdx % STATE.challenges.length)+1} / ${STATE.challenges.length} 題</div>
+    <div class="ch-q">${ch.prompt}</div>
+    <div class="ch-hint">💡 提示：${ch.hint}</div>
+    <div class="ch-row">
+      <input class="ch-input" id="ch-inp" placeholder="輸入答案…" onkeydown="if(event.key==='Enter')checkCh()">
+      <button class="ch-btn" onclick="checkCh()">確認</button>
+    </div>
+    <div class="ch-fb" id="ch-fb"></div>
+    <button class="ch-next" onclick="nextCh()">換一題 →</button>
+  `;
+  setTimeout(() => document.getElementById('ch-inp')&&document.getElementById('ch-inp').focus(), 80);
+}
+function checkCh() {
+  const ch = STATE.challenges[chIdx % STATE.challenges.length];
+  const val = (document.getElementById('ch-inp').value||'').trim().toLowerCase();
+  const ans = ch.answer.toLowerCase();
+  const fb = document.getElementById('ch-fb');
+  if(val === ans) {
+    fb.className = 'ch-fb ok'; fb.textContent = '🎉 答對了！答案是：' + ch.full;
+  } else {
+    fb.className = 'ch-fb err'; fb.textContent = '再試試看！提示：' + ch.hint;
+  }
+}
+function nextCh() { chIdx++; renderChallenge(); }
+
+// ── ADMIN ────────────────────────────────────────────────────────────────────
+function renderAdmin() {
+  document.getElementById('stat-roots').textContent = STATE.roots.length;
+  document.getElementById('stat-words').textContent = STATE.words.length;
+  document.getElementById('stat-ch').textContent = STATE.challenges.length;
+  // root list
+  const rl = document.getElementById('root-list');
+  rl.innerHTML = STATE.roots.length ? STATE.roots.map(r => `
+    <div class="list-item">
+      <div><div class="list-item-name">${r.root}</div><div class="list-item-sub">${r.meaning} · ${r.words||0} 個單字</div></div>
+      <button class="btn-danger" onclick="deleteRoot('${r.id}')">刪除</button>
+    </div>`).join('') : '<div class="no-items">尚無字根</div>';
+  // word select
+  const ws = document.getElementById('w-root');
+  ws.innerHTML = STATE.roots.map(r => `<option value="${r.id}">${r.root} （${r.meaning}）</option>`).join('');
+  // word list
+  const wl = document.getElementById('word-list');
+  wl.innerHTML = STATE.words.length ? STATE.words.map(w => {
+    const r = STATE.roots.find(x=>x.id===w.rootId);
+    return `<div class="word-list-item"><div class="winfo"><div class="wname">${w.word} <span style="font-size:11px;color:var(--text-muted)">${w.ph||''}</span></div><div class="wdef">${w.def}</div></div><button class="btn-danger" onclick="deleteWord('${w.id}')">刪除</button></div>`;
+  }).join('') : '<div class="no-items">尚無單字</div>';
+  // challenge list
+  const cl = document.getElementById('ch-list');
+  cl.innerHTML = STATE.challenges.length ? STATE.challenges.map(c => `
+    <div class="list-item"><div><div class="list-item-name" style="font-size:13px">${c.prompt.slice(0,32)}…</div><div class="list-item-sub">答案：${c.answer}</div></div><button class="btn-danger" onclick="deleteCh('${c.id}')">刪除</button></div>`).join('') : '<div class="no-items">尚無填字題</div>';
+  // parts preview live bind
+  ['p0','p1','p2','p3','p4','p5'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.oninput = updatePartsPreview;
+  });
+  updatePartsPreview();
+}
+function updatePartsPreview() {
+  const types = ['prefix','root','suffix','prefix','root','suffix'];
+  const parts = ['p0','p1','p2','p3','p4','p5'].map((id,i) => ({t:types[i], l:(document.getElementById(id)||{}).value||''})).filter(p=>p.l);
+  document.getElementById('parts-preview').innerHTML = parts.map(p=>`<span class="part ${p.t}">${p.l}</span>`).join('');
+}
+function addRoot() {
+  const root = document.getElementById('r-root').value.trim();
+  const meaning = document.getElementById('r-meaning').value.trim();
+  const origin = document.getElementById('r-origin').value.trim();
+  if(!root || !meaning) { toast('請填寫字根和中文意思'); return; }
+  const id = 'r' + Date.now();
+  STATE.roots.push({ id, root, meaning, origin });
+  save(); renderAdmin();
+  document.getElementById('r-root').value='';
+  document.getElementById('r-meaning').value='';
+  document.getElementById('r-origin').value='';
+  toast('✅ 字根「' + root + '」已新增！');
+}
+function deleteRoot(id) {
+  if(!confirm('確定刪除此字根？相關單字也會一起刪除。')) return;
+  STATE.roots = STATE.roots.filter(r=>r.id!==id);
+  STATE.words = STATE.words.filter(w=>w.rootId!==id);
+  save(); renderAdmin(); toast('字根已刪除');
+}
+function addWord() {
+  const rootId = document.getElementById('w-root').value;
+  const word = document.getElementById('w-word').value.trim();
+  const ph = document.getElementById('w-ph').value.trim();
+  const def = document.getElementById('w-def').value.trim();
+  const ex = document.getElementById('w-ex').value.trim();
+  if(!rootId || !word || !def) { toast('請填寫單字和中文解釋'); return; }
+  const types = ['prefix','root','suffix','prefix','root','suffix'];
+  const parts = ['p0','p1','p2','p3','p4','p5'].map((id,i) => ({t:types[i], l:document.getElementById(id).value.trim()})).filter(p=>p.l);
+  const id = 'w' + Date.now();
+  STATE.words.push({ id, rootId, word, ph, parts, def, ex });
+  save(); renderAdmin();
+  ['w-word','w-ph','w-def','w-ex','p0','p1','p2','p3','p4','p5'].forEach(i => document.getElementById(i).value='');
+  updatePartsPreview();
+  toast('✅ 單字「' + word + '」已新增！');
+}
+function deleteWord(id) {
+  STATE.words = STATE.words.filter(w=>w.id!==id);
+  save(); renderAdmin(); toast('單字已刪除');
+}
+function addChallenge() {
+  const prompt = document.getElementById('ch-q').value.trim();
+  const hint = document.getElementById('ch-hint-in').value.trim();
+  const answer = document.getElementById('ch-ans').value.trim();
+  const full = document.getElementById('ch-full').value.trim() || answer;
+  if(!prompt || !answer) { toast('請填寫題目和答案'); return; }
+  STATE.challenges.push({ id:'c'+Date.now(), prompt, hint, answer, full });
+  save(); renderAdmin();
+  ['ch-q','ch-hint-in','ch-ans','ch-full'].forEach(i => document.getElementById(i).value='');
+  toast('✅ 填字題已新增！');
+}
+function deleteCh(id) {
+  STATE.challenges = STATE.challenges.filter(c=>c.id!==id);
+  save(); renderAdmin(); toast('題目已刪除');
+}
+
+// ── TOAST ────────────────────────────────────────────────────────────────────
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+renderLearn();
+</script>
+</body>
+</html>
