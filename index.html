@@ -27,13 +27,12 @@ a { color: inherit; text-decoration: none; }
 
 /* NAV */
 .nav { background: var(--surface); border-bottom: 0.5px solid var(--border-strong); padding: 0 2rem; display: flex; align-items: center; gap: 0; position: sticky; top: 0; z-index: 50; }
-.nav-logo { font-family: 'Lora', serif; font-size: 18px; color: var(--purple-800); margin-right: 2rem; padding: 1rem 0; white-space: nowrap; }
+.nav-logo { display: flex; align-items: center; gap: 10px; font-family: 'Lora', serif; font-size: 18px; color: var(--purple-800); margin-right: 2rem; padding: 1rem 0; white-space: nowrap; }
+.logo-img { height: 32px; width: auto; }
 .nav-tabs { display: flex; gap: 0; flex: 1; }
 .nav-tab { padding: 1rem 1.1rem; font-size: 14px; font-weight: 500; color: var(--text-muted); border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
 .nav-tab:hover { color: var(--text); }
 .nav-tab.active { color: var(--purple-800); border-bottom-color: var(--purple-400); }
-.nav-admin { margin-left: auto; padding: 6px 14px; font-size: 12px; font-weight: 500; background: var(--gray-50); border: 0.5px solid var(--border-strong); border-radius: 20px; cursor: pointer; color: var(--text-muted); }
-.nav-admin:hover { background: var(--purple-50); color: var(--purple-800); }
 
 /* MAIN */
 .main { max-width: 780px; margin: 0 auto; padding: 2rem 1.25rem; }
@@ -158,18 +157,32 @@ textarea { resize: vertical; min-height: 80px; }
 .word-list-item .winfo { flex: 1; }
 .word-list-item .wname { font-size: 14px; font-weight: 600; }
 .word-list-item .wdef { font-size: 12px; color: var(--text-muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 260px; }
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 13px;
+  color: var(--text-muted);
+  border-top: 0.5px solid var(--border);
+  margin-top: 3rem;
+  background: var(--surface);
+}
 </style>
 </head>
 <body>
 
 <nav class="nav">
-  <div class="nav-logo">字根字彙</div>
+  <div class="nav-logo">
+    <img src="logo.png" alt="楠梓高中校徽" class="logo-img">
+    <span>字根字彙</span>
+  </div>
   <div class="nav-tabs">
+    <div class="nav-tab" onclick="goPage('admin')">⚙ 管理</div>
     <div class="nav-tab active" onclick="goPage('learn')">📖 學習字根</div>
     <div class="nav-tab" onclick="goPage('quiz')">🧠 小測驗</div>
     <div class="nav-tab" onclick="goPage('challenge')">✏️ 填字挑戰</div>
   </div>
-  <button class="nav-admin" onclick="goPage('admin')">⚙ 管理</button>
 </nav>
 
 <div class="main">
@@ -528,12 +541,31 @@ function save() {
 let STATE = load();
 let curRoot = 0, qIdx = 0, qScore = 0, qAnswered = false, chIdx = 0;
 
+function resetAll() {
+  if(!confirm('確定要重置所有資料為預設值嗎？這將會清除您新增的所有字根與單字。')) return;
+  localStorage.removeItem('vr_roots');
+  localStorage.removeItem('vr_words');
+  localStorage.removeItem('vr_ch');
+  STATE = load();
+  curRoot = 0;
+  qIdx = 0;
+  qScore = 0;
+  qAnswered = false;
+  chIdx = 0;
+  if(document.getElementById('page-admin').classList.contains('active')) {
+    renderAdmin();
+  } else {
+    goPage('learn');
+  }
+  toast('🔄 所有資料已重置為預設值');
+}
+
 // ── NAV ──────────────────────────────────────────────────────────────────────
 function goPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
-  const idx = ['learn','quiz','challenge'].indexOf(id);
+  const idx = ['admin','learn','quiz','challenge'].indexOf(id);
   if(idx >= 0) document.querySelectorAll('.nav-tab')[idx].classList.add('active');
   if(id==='learn') renderLearn();
   if(id==='quiz') renderQuiz();
@@ -768,5 +800,8 @@ function toast(msg) {
 // ── INIT ─────────────────────────────────────────────────────────────────────
 renderLearn();
 </script>
+<footer class="footer">
+  <div>201楊蕓妃</div>
+</footer>
 </body>
 </html>
